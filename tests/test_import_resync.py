@@ -75,5 +75,55 @@ class TestImportSurvivesDeadSocket(unittest.TestCase):
             server.set_session("not-a-valid-origin", [{"name": "t", "value": "x"}])
 
 
+    def test_inject_storage_propagates_a_dead_socket(self):
+        """THE root cause of "0/8 keys" on a dead socket. _inject_storage used to
+        catch Exception and store "<verify failed: WinError 10053>" as a key name,
+        so set_session's resync never saw a connection loss, and the popup printed
+        raw localized Windows text to the user."""
+        sys.path.insert(0, str(HERE.parent / "tests"))
+        from test_sessions import _FakeTransport
+
+        class DeadSocket(_FakeTransport):
+            def request(self, method, params=None, session_id=None):
+                raise OSError(10053, "connexion abandonnee par l'hote")
+
+        orig_transport = server._CDP_TRANSPORT
+        orig_session = server._CDP_SESSION_ID
+        try:
+            server._CDP_TRANSPORT = DeadSocket()
+            server._CDP_SESSION_ID = "s"
+            with self.assertRaises(OSError):
+                server._inject_storage("https://x.com", {"k": "v"})
+        finally:
+            server._CDP_TRANSPORT = orig_transport
+            server._CDP_SESSION_ID = orig_session
+
+    def test_page_level_failure_records_a_code_not_os_text(self):
+        """A page-level evaluate failure stays retryable, but what reaches the
+        popup is a short code - never the raw OS sentence (2026-09-14 screenshot)."""
+        sys.path.insert(0, str(HERE.parent / "tests"))
+        from test_sessions import _FakeTransport
+
+        class BadPage(_FakeTransport):
+            def request(self, method, params=None, session_id=None):
+                raise Exception("Cannot access contents of the page. "
+                                "Extension manifest must request permission...")
+
+        orig_transport = server._CDP_TRANSPORT
+        orig_session = server._CDP_SESSION_ID
+        try:
+            server._CDP_TRANSPORT = BadPage()
+            server._CDP_SESSION_ID = "s"
+            count = server._inject_storage("https://x.com", {"k": "v"})
+            self.assertEqual(count, -1)
+            joined = " ".join(server._LAST_STORAGE_MISSING)
+            self.assertNotIn("WinError", joined)
+            self.assertNotIn("permission", joined.lower())
+            self.assertIn("verify-error:", joined)
+        finally:
+            server._CDP_TRANSPORT = orig_transport
+            server._CDP_SESSION_ID = orig_session
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

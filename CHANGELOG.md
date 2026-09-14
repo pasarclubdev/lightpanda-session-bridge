@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.8] - 2026-09-14
+### Fixed
+- `WinError 10053` shown raw in the popup ("Transfert incomplet : 0/8"): the
+  storage injector caught the connection error before the 0.5.7 resync could
+  see it. It now propagates - socket dies *during* injection, resync, retry.
+- Page-level failures report short codes (`verify-error:Name`) translated into
+  10 languages, never the OS's raw localized sentence.
+
 ## [0.5.7] - 2026-09-14
 ### Fixed
 - **The sync could hang on "Transferring & verifying…" forever.** When WSL or Lightpanda restarted under the relay, the daemon's single CDP WebSocket died and every `/v1/session/import` failed in milliseconds (`WinError 10053` at storage-verify) - but only `proxy_cdp` had the resync-and-retry; the import path did not, so nothing revived the socket except using the agent proxy by chance. `set_session()` now resyncs and retries once on a dead connection, like the proxy always did (`tests/test_import_resync.py` proves it: red without the fix, green with). The popup additionally gets a hard 30s deadline on the import fetch (`errRelayTimeout`, all ten languages): a client waiting forever has no honest state to show, so the sync now always ends - pass, fail, or say the relay is stuck.

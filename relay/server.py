@@ -682,9 +682,19 @@ def _inject_storage(origin: str, storage: dict) -> int:
                 _LAST_STORAGE_MISSING = []
                 return len(entries)
             _LAST_STORAGE_MISSING = missing
+        except (websocket.WebSocketException, OSError):
+            # Connection-level failure: NEVER swallow it into a "<verify failed>"
+            # placeholder. A dead socket is not missing keys - propagating is
+            # what lets set_session's resync+retry revive the WSL/Lightpanda
+            # connection and redo the whole import. Swallowing it here is what
+            # produced the endless "Transfert incomplet : 0/8" of 2026-09-14.
+            raise
         except Exception as err:
-            _LAST_STORAGE_MISSING = ["<verify failed: %s>" % err]
-            pass
+            # Page-level evaluate failure: retryable via a fresh navigation, and
+            # recorded as a CODE only - these names are rendered verbatim in the
+            # popup, and raw OS text (WinError 10053, French Windows sentences)
+            # must never surface there.
+            _LAST_STORAGE_MISSING = ["<verify-error:%s>" % type(err).__name__]
         # A navigation replays a previously registered document-start restore
         # and gives the page a fresh, clean context to write into.
         if attempt == 0:
