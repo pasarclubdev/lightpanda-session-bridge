@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.5.7] - 2026-09-14
+### Fixed
+- **The sync could hang on "Transferring & verifying…" forever.** When WSL or Lightpanda restarted under the relay, the daemon's single CDP WebSocket died and every `/v1/session/import` failed in milliseconds (`WinError 10053` at storage-verify) - but only `proxy_cdp` had the resync-and-retry; the import path did not, so nothing revived the socket except using the agent proxy by chance. `set_session()` now resyncs and retries once on a dead connection, like the proxy always did (`tests/test_import_resync.py` proves it: red without the fix, green with). The popup additionally gets a hard 30s deadline on the import fetch (`errRelayTimeout`, all ten languages): a client waiting forever has no honest state to show, so the sync now always ends - pass, fail, or say the relay is stuck.
+
 ## [0.5.6] - 2026-09-10
 ### Fixed
 - **Three languages rendered the string "undefined".** The Chinese, Japanese and Arabic blocks were each missing `clearConfirm` and `clearedToast`, so the tooltip on the clear button and the toast after clearing showed `undefined`. Every other language had them; nothing compared the key sets, the old test only checked a hand-picked list of *update* strings. The whole key set is now compared across all ten languages, and every `t('...')` call in `popup.js` is resolved against all ten.

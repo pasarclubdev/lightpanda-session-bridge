@@ -726,9 +726,15 @@ def set_session(origin: str, cookies: list[dict], storage: dict | None = None) -
         raise RuntimeError("localStorage key(s) refused by relay: " + detail)
 
     with CDP_LOCK:
-        _ensure_connection(origin)
-
-        storage_count = _apply_session(origin, converted, safe_storage)
+        try:
+            _ensure_connection(origin)
+            storage_count = _apply_session(origin, converted, safe_storage)
+        except (websocket.WebSocketException, OSError, RuntimeError):
+            # Connection lost (WSL / Lightpanda restarted under us) -> resync
+            # and retry ONCE, exactly like proxy_cdp: an import must not keep
+            # failing in a loop on a dead socket that nothing else revives.
+            _connection_resync()
+            storage_count = _apply_session(origin, converted, safe_storage)
         _LAST_STORAGE_APPLIED_COUNT = max(storage_count, 0)
 
         # Verification via Network.getCookies

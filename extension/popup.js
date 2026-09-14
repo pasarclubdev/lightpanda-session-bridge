@@ -19,6 +19,7 @@ const I18N = {
     success: (count, keys) => `✓ Session synchronized (${count} cookies, ${keys} localStorage keys).`,
     errStorageExtract: 'Could not read localStorage on this page (missing permission, or the page is not injectable). Reload the tab and try again.',
     errPartialStorage: (got, want, names) => `Incomplete transfer: ${got}/${want} localStorage keys reached Lightpanda${names}. Sync again.`,
+    errRelayTimeout: 'Relay did not answer within 30s (Lightpanda restarting?). Try again.',
     missingKeys: (list) => ` (missing: ${list})`,
     errStorageRefused: (detail) => `Some localStorage keys could not be transferred: ${detail}`,
     errNeedHttps: "Please open a public HTTPS website (e.g. Gmail, A6API).",
@@ -68,6 +69,7 @@ const I18N = {
     success: (count, keys) => `✓ Session synchronisée (${count} cookies, ${keys} clés localStorage).`,
     errStorageExtract: 'Lecture du localStorage impossible sur cette page (permission manquante ou page non injectable). Rechargez l\'onglet et réessayez.',
     errPartialStorage: (got, want, names) => `Transfert incomplet : ${got}/${want} clés localStorage reçues par Lightpanda${names}. Resynchronisez.`,
+    errRelayTimeout: 'Le relais n\'a pas répondu sous 30 s (Lightpanda en redémarrage ?). Réessayez.',
     missingKeys: (list) => ` (manquantes: ${list})`,
     errStorageRefused: (detail) => `Certaines clés localStorage n'ont pas pu être transférées : ${detail}`,
     errNeedHttps: "Ouvrez un site HTTPS public (ex: Gmail, A6API).",
@@ -117,6 +119,7 @@ const I18N = {
     success: (count, keys) => `✓ Sesión sincronizada (${count} cookies, ${keys} claves de localStorage).`,
     errStorageExtract: 'No se pudo leer localStorage en esta página (falta permiso o la página no es inyectable). Recarga la pestaña y reintenta.',
     errPartialStorage: (got, want, names) => `Transferencia incompleta: ${got}/${want} claves de localStorage llegaron a Lightpanda${names}. Sincroniza de nuevo.`,
+    errRelayTimeout: 'El relay no respondió en 30 s (¿Lightpanda reiniciándose?). Inténtelo de nuevo.',
     missingKeys: (list) => ` (faltan: ${list})`,
     errStorageRefused: (detail) => `No se pudieron transferir algunas claves de localStorage: ${detail}`,
     errNeedHttps: "Abre un sitio web HTTPS público (ej. Gmail, A6API).",
@@ -166,6 +169,7 @@ const I18N = {
     success: (count, keys) => `✓ Sitzung synchronisiert (${count} Cookies, ${keys} localStorage-Schlüssel).`,
     errStorageExtract: 'localStorage konnte auf dieser Seite nicht gelesen werden (fehlende Berechtigung oder Seite nicht injizierbar). Tab neu laden und erneut versuchen.',
     errPartialStorage: (got, want, names) => `Unvollständige Übertragung: ${got}/${want} localStorage-Schlüssel sind bei Lightpanda angekommen${names}. Erneut synchronisieren.`,
+    errRelayTimeout: 'Relay antwortete nicht innerhalb von 30 s (Lightpanda startet neu?). Erneut versuchen.',
     missingKeys: (list) => ` (fehlen: ${list})`,
     errStorageRefused: (detail) => `Einige localStorage-Schlüssel konnten nicht übertragen werden: ${detail}`,
     errNeedHttps: "Bitte öffnen Sie eine öffentliche HTTPS-Website.",
@@ -213,6 +217,7 @@ const I18N = {
     success: (count, keys) => `✓ 会话已同步（${count} 个 Cookie，${keys} 个 localStorage 键）。`,
     errStorageExtract: '无法在此页面读取 localStorage（缺少权限或页面不可注入）。请重新加载标签页后重试。',
     errPartialStorage: (got, want, names) => `传输不完整：${got}/${want} 个 localStorage 键到达 Lightpanda${names}。请重新同步。`,
+    errRelayTimeout: '中继在 30 秒内未响应（Lightpanda 正在重启？）。请重试。',
     missingKeys: (list) => ` (缺失: ${list})`,
     errStorageRefused: (detail) => `部分 localStorage 键无法传输：${detail}`,
     errNeedHttps: "请打开公开的 HTTPS 网站（例如 Gmail、A6API）。",
@@ -262,6 +267,7 @@ const I18N = {
     success: (count, keys) => `✓ セッションを同期しました（Cookie ${count} 個、localStorage ${keys} 件）。`,
     errStorageExtract: 'このページで localStorage を読み取れません（権限不足、または注入できないページ）。タブを再読み込みして再試行してください。',
     errPartialStorage: (got, want, names) => `転送が不完全です：localStorage ${got}/${want} 件のみ Lightpanda に到達しました${names}。再同期してください。`,
+    errRelayTimeout: 'リレーが30秒以内に応答しませんでした（Lightpanda再起動中？）。もう一度お試しください。',
     missingKeys: (list) => ` (欠落: ${list})`,
     errStorageRefused: (detail) => `一部の localStorage キーを転送できませんでした：${detail}`,
     errNeedHttps: "公開HTTPSサイト（Gmail、A6APIなど）を開いてください。",
@@ -313,6 +319,7 @@ const I18N = {
     success: (count, keys) => `✓ Sessione sincronizzata (${count} cookie, ${keys} chiavi localStorage).`,
     errStorageExtract: 'Impossibile leggere localStorage su questa pagina (permesso mancante o pagina non iniettabile). Ricarica la scheda e riprova.',
     errPartialStorage: (got, want, names) => `Trasferimento incompleto: ${got}/${want} chiavi localStorage arrivate a Lightpanda${names}. Sincronizza di nuovo.`,
+    errRelayTimeout: 'Il relay non ha risposto entro 30 s (Lightpanda in riavvio?). Riprova.',
     missingKeys: (list) => ` (mancanti: ${list})`,
     errStorageRefused: (detail) => `Alcune chiavi localStorage non sono state trasferite: ${detail}`,
     errNeedHttps: "Apri un sito HTTPS pubblico (es. Gmail, A6API).",
@@ -362,6 +369,7 @@ const I18N = {
     success: (count, keys) => `✓ Sessão sincronizada (${count} cookies, ${keys} chaves de localStorage).`,
     errStorageExtract: 'Não foi possível ler o localStorage nesta página (permissão ausente ou página não injetável). Recarregue a aba e tente novamente.',
     errPartialStorage: (got, want, names) => `Transferência incompleta: ${got}/${want} chaves de localStorage chegaram ao Lightpanda${names}. Sincronize novamente.`,
+    errRelayTimeout: 'O relay não respondeu em 30 s (Lightpanda reiniciando?). Tente novamente.',
     missingKeys: (list) => ` (faltando: ${list})`,
     errStorageRefused: (detail) => `Algumas chaves de localStorage não puderam ser transferidas: ${detail}`,
     errNeedHttps: "Abra um site HTTPS público (ex: Gmail, A6API).",
@@ -409,6 +417,7 @@ const I18N = {
     success: (count, keys) => `✓ تمت مزامنة الجلسة (${count} ملف تعريف، ${keys} مفتاح localStorage).`,
     errStorageExtract: 'تعذر قراءة localStorage في هذه الصفحة (صلاحية ناقصة أو صفحة غير قابلة للحقن). أعد تحميل التبويب وحاول مرة أخرى.',
     errPartialStorage: (got, want, names) => `النقل غير مكتمل: ${got}/${want} مفتاح localStorage وصل إلى Lightpanda${names}. أعد المزامنة.`,
+    errRelayTimeout: 'لم يستجب المرجع خلال 30 ثانية (هل يعيد Lightpanda التشغيل؟). حاول مرة أخرى.',
     missingKeys: (list) => ` (المفقودة: ${list})`,
     errStorageRefused: (detail) => `تعذّر نقل بعض مفاتيح localStorage: ${detail}`,
     errNeedHttps: "يرجى فتح موقع HTTPS عام.",
@@ -460,6 +469,7 @@ const I18N = {
     success: (count, keys) => `✓ Сеанс синхронизирован (${count} cookie, ${keys} ключей localStorage).`,
     errStorageExtract: 'Не удалось прочитать localStorage на этой странице (нет разрешения или страница не поддерживает внедрение). Перезагрузите вкладку и повторите.',
     errPartialStorage: (got, want, names) => `Перенос неполный: ${got}/${want} ключей localStorage достигли Lightpanda${names}. Синхронизируйте снова.`,
+    errRelayTimeout: 'Реле не ответило в течение 30 с (Lightpanda перезапускается?). Повторите попытку.',
     missingKeys: (list) => ` (отсутствуют: ${list})`,
     errStorageRefused: (detail) => `Некоторые ключи localStorage не удалось перенести: ${detail}`,
     errNeedHttps: "Откройте общедоступный сайт HTTPS (например, Gmail, A6API).",
@@ -1045,15 +1055,28 @@ transferEl.addEventListener('click', async () => {
     }
     const storageKeys = storage ? Object.keys(storage).length : 0;
 
-    // 3. Send payload to Relay (authenticated with shared token)
+    // 3. Send payload to Relay (authenticated with shared token).
+    //    AbortController + deadline: without one, a relay that never answers
+    //    (or an extension reload mid-fetch) left the status line on
+    //    "Transferring & verifying…" forever - the popup has no way to say
+    //    "still working" honestly, so the sync must end, pass or fail.
     const payload = { origin, cookies, storage };
-    const response = await fetch(`${RELAY}/v1/session/import`, {
-      method: 'POST',
-      headers: bridgeHeaders(),
-      body: JSON.stringify(payload)
-    });
-
-    const result = await response.json();
+    const controller = new AbortController();
+    const deadline = setTimeout(() => controller.abort(), 30000);
+    let response, result;
+    try {
+      response = await fetch(`${RELAY}/v1/session/import`, {
+        method: 'POST',
+        headers: bridgeHeaders(),
+        body: JSON.stringify(payload),
+        signal: controller.signal
+      });
+      result = await response.json();
+    } catch (fetchErr) {
+      throw (fetchErr && fetchErr.name === 'AbortError') ? new Error(t('errRelayTimeout')) : fetchErr;
+    } finally {
+      clearTimeout(deadline);
+    }
 
     // The relay verifies EVERY key it was sent, so a short count means a
     // partial snapshot reached Lightpanda. It must never read as success here
